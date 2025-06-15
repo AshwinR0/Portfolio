@@ -3,7 +3,11 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Users, ShoppingCart, MessageCircle, TrendingUp, ExternalLink } from 'lucide-react';
 
-const ProjectGoals: React.FC = () => {
+interface ProjectGoalsProps {
+  isDarkMode: boolean;
+}
+
+const ProjectGoals: React.FC<ProjectGoalsProps> = ({ isDarkMode }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const projectRefs = useRef<HTMLDivElement[]>([]);
 
@@ -106,15 +110,23 @@ const ProjectGoals: React.FC = () => {
   return (
     <section 
       ref={sectionRef}
-      className="min-h-screen bg-gradient-to-b from-gray-900 to-indigo-950 py-20 px-4"
+      className={`min-h-screen py-20 px-4 transition-colors duration-500 ${
+        isDarkMode 
+          ? 'bg-gradient-to-b from-gray-900 to-indigo-950' 
+          : 'bg-gradient-to-b from-blue-50 to-indigo-100'
+      }`}
     >
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold mb-4 text-white">
+          <h2 className={`text-4xl md:text-6xl font-bold mb-4 ${
+            isDarkMode ? 'text-white' : 'text-gray-800'
+          }`}>
             Goal Replays
           </h2>
-          <p className="text-xl text-blue-200">
+          <p className={`text-xl ${
+            isDarkMode ? 'text-blue-200' : 'text-blue-700'
+          }`}>
             Project Highlights & Impact
           </p>
           <div className="flex justify-center mt-6">
@@ -186,24 +198,30 @@ const ProjectGoals: React.FC = () => {
         </div>
 
         {/* Match statistics */}
-        <div className="mt-16 bg-gray-900 p-8 rounded-3xl border border-indigo-400">
-          <h4 className="text-2xl font-bold text-white text-center mb-6">Match Statistics</h4>
+        <div className={`mt-16 p-8 rounded-3xl border transition-colors duration-500 ${
+          isDarkMode 
+            ? 'bg-gray-900 border-indigo-400' 
+            : 'bg-white border-indigo-500 shadow-xl'
+        }`}>
+          <h4 className={`text-2xl font-bold text-center mb-6 ${
+            isDarkMode ? 'text-white' : 'text-gray-800'
+          }`}>Match Statistics</h4>
           <div className="grid md:grid-cols-4 gap-6 text-center">
             <div>
               <div className="text-3xl font-bold text-blue-400 mb-2">100%</div>
-              <div className="text-gray-400">Project Success</div>
+              <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Project Success</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-green-400 mb-2">50+</div>
-              <div className="text-gray-400">Features Built</div>
+              <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Features Built</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-yellow-400 mb-2">1M+</div>
-              <div className="text-gray-400">Users Impacted</div>
+              <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Users Impacted</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-purple-400 mb-2">45%</div>
-              <div className="text-gray-400">Avg Performance Gain</div>
+              <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Avg Performance Gain</div>
             </div>
           </div>
         </div>

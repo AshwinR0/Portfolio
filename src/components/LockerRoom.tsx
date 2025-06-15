@@ -3,7 +3,11 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Target, Code, TestTube, Rocket } from 'lucide-react';
 
-const LockerRoom: React.FC = () => {
+interface LockerRoomProps {
+  isDarkMode: boolean;
+}
+
+const LockerRoom: React.FC<LockerRoomProps> = ({ isDarkMode }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const chalkboardRef = useRef<HTMLDivElement>(null);
   const stepsRef = useRef<HTMLDivElement[]>([]);
@@ -102,15 +106,23 @@ const LockerRoom: React.FC = () => {
   return (
     <section 
       ref={sectionRef}
-      className="min-h-screen bg-gradient-to-b from-indigo-950 to-gray-900 py-20 px-4"
+      className={`min-h-screen py-20 px-4 transition-colors duration-500 ${
+        isDarkMode 
+          ? 'bg-gradient-to-b from-indigo-950 to-gray-900' 
+          : 'bg-gradient-to-b from-indigo-100 to-blue-50'
+      }`}
     >
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold mb-4 text-white">
+          <h2 className={`text-4xl md:text-6xl font-bold mb-4 ${
+            isDarkMode ? 'text-white' : 'text-gray-800'
+          }`}>
             Locker Room
           </h2>
-          <p className="text-xl text-indigo-200">
+          <p className={`text-xl ${
+            isDarkMode ? 'text-indigo-200' : 'text-indigo-700'
+          }`}>
             Development Philosophy & Process
           </p>
         </div>
@@ -118,15 +130,27 @@ const LockerRoom: React.FC = () => {
         {/* Chalkboard */}
         <div 
           ref={chalkboardRef}
-          className="bg-gray-800 p-8 rounded-3xl shadow-2xl border-4 border-gray-600 mb-12"
+          className={`p-8 rounded-3xl shadow-2xl border-4 mb-12 transition-colors duration-500 ${
+            isDarkMode 
+              ? 'bg-gray-800 border-gray-600' 
+              : 'bg-gray-100 border-gray-300'
+          }`}
           style={{
-            background: 'linear-gradient(135deg, #2d3748 0%, #1a202c 100%)',
-            boxShadow: 'inset 0 0 20px rgba(0,0,0,0.5)'
+            background: isDarkMode 
+              ? 'linear-gradient(135deg, #2d3748 0%, #1a202c 100%)' 
+              : 'linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%)',
+            boxShadow: isDarkMode 
+              ? 'inset 0 0 20px rgba(0,0,0,0.5)' 
+              : 'inset 0 0 20px rgba(0,0,0,0.1)'
           }}
         >
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-white mb-2">Game Plan</h3>
-            <p className="text-gray-300">My development methodology</p>
+            <h3 className={`text-2xl font-bold mb-2 ${
+              isDarkMode ? 'text-white' : 'text-gray-800'
+            }`}>Game Plan</h3>
+            <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              My development methodology
+            </p>
           </div>
 
           {/* Philosophy steps */}
@@ -136,8 +160,10 @@ const LockerRoom: React.FC = () => {
               <div
                 key={`connector-${index}`}
                 data-connector={index}
-                className={`absolute top-1/2 w-full h-0.5 bg-gradient-to-r from-transparent via-gray-400 to-transparent transform -translate-y-1/2 ${
-                  index === 0 ? 'left-1/4' : index === 1 ? 'left-1/2' : 'left-3/4'
+                className={`absolute top-1/2 w-full h-0.5 transform -translate-y-1/2 ${
+                  isDarkMode 
+                    ? 'bg-gradient-to-r from-transparent via-gray-400 to-transparent' 
+                    : 'bg-gradient-to-r from-transparent via-gray-500 to-transparent'
                 }`}
                 style={{
                   left: `${(index + 1) * 25}%`,
@@ -154,14 +180,22 @@ const LockerRoom: React.FC = () => {
                   <div
                     key={index}
                     ref={el => { if (el) stepsRef.current[index] = el; }}
-                    className={`bg-gray-700 p-6 rounded-2xl border-2 ${item.color} group hover:scale-105 transition-transform duration-300`}
+                    className={`p-6 rounded-2xl border-2 ${item.color} group hover:scale-105 transition-transform duration-300 ${
+                      isDarkMode ? 'bg-gray-700' : 'bg-white shadow-lg'
+                    }`}
                   >
                     <div className="text-center">
-                      <div className={`w-16 h-16 mx-auto mb-4 bg-gray-600 rounded-full flex items-center justify-center group-hover:bg-gray-500 transition-colors duration-300`}>
+                      <div className={`w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center group-hover:bg-gray-500 transition-colors duration-300 ${
+                        isDarkMode ? 'bg-gray-600' : 'bg-gray-100'
+                      }`}>
                         <IconComponent className={`w-8 h-8 ${item.color.split(' ')[0]}`} />
                       </div>
-                      <h4 className="text-xl font-bold text-white mb-2">{item.step}</h4>
-                      <p className="text-gray-300 text-sm">{item.description}</p>
+                      <h4 className={`text-xl font-bold mb-2 ${
+                        isDarkMode ? 'text-white' : 'text-gray-800'
+                      }`}>{item.step}</h4>
+                      <p className={`text-sm ${
+                        isDarkMode ? 'text-gray-300' : 'text-gray-600'
+                      }`}>{item.description}</p>
                     </div>
                   </div>
                 );
@@ -171,12 +205,18 @@ const LockerRoom: React.FC = () => {
         </div>
 
         {/* Philosophy details */}
-        <div className="bg-gray-800 p-8 rounded-3xl border border-indigo-400">
-          <h4 className="text-2xl font-bold text-white text-center mb-6">Coaching Notes</h4>
+        <div className={`p-8 rounded-3xl border transition-colors duration-500 ${
+          isDarkMode 
+            ? 'bg-gray-800 border-indigo-400' 
+            : 'bg-white border-indigo-500 shadow-xl'
+        }`}>
+          <h4 className={`text-2xl font-bold text-center mb-6 ${
+            isDarkMode ? 'text-white' : 'text-gray-800'
+          }`}>Coaching Notes</h4>
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <h5 className="text-lg font-semibold text-indigo-400 mb-3">Technical Excellence</h5>
-              <ul className="space-y-2 text-gray-300">
+              <ul className={`space-y-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                 <li>• Clean, maintainable code architecture</li>
                 <li>• Performance-first development approach</li>
                 <li>• Comprehensive testing strategies</li>
@@ -185,7 +225,7 @@ const LockerRoom: React.FC = () => {
             </div>
             <div>
               <h5 className="text-lg font-semibold text-green-400 mb-3">Team Collaboration</h5>
-              <ul className="space-y-2 text-gray-300">
+              <ul className={`space-y-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                 <li>• Agile development methodologies</li>
                 <li>• Clear communication and documentation</li>
                 <li>• Code reviews and knowledge sharing</li>

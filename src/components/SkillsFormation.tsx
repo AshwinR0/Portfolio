@@ -1,9 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Atom, FileCode2, Palette, Server, DatabaseZap, Zap, GitBranch, Database } from 'lucide-react';
+import { Database, Zap, GitBranch, Atom, FileCode2, Palette, Server, DatabaseZap } from 'lucide-react';
 
-const SkillsFormation: React.FC = () => {
+interface SkillsFormationProps {
+  isDarkMode: boolean;
+}
+
+const SkillsFormation: React.FC<SkillsFormationProps> = ({ isDarkMode }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const fieldRef = useRef<HTMLDivElement>(null);
   const skillsRef = useRef<HTMLDivElement[]>([]);
@@ -73,15 +77,23 @@ const SkillsFormation: React.FC = () => {
   return (
     <section 
       ref={sectionRef}
-      className="min-h-screen bg-gradient-to-b from-gray-900 to-green-950 py-20 px-4"
+      className={`min-h-screen py-20 px-4 transition-colors duration-500 ${
+        isDarkMode 
+          ? 'bg-gradient-to-b from-gray-900 to-green-950' 
+          : 'bg-gradient-to-b from-blue-50 to-green-100'
+      }`}
     >
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold mb-4 text-white">
+          <h2 className={`text-4xl md:text-6xl font-bold mb-4 ${
+            isDarkMode ? 'text-white' : 'text-gray-800'
+          }`}>
             First Touch
           </h2>
-          <p className="text-xl text-green-200">
+          <p className={`text-xl ${
+            isDarkMode ? 'text-green-200' : 'text-green-700'
+          }`}>
             Skills & Tools Formation
           </p>
           <div className="w-24 h-1 bg-green-400 mx-auto mt-4" />
@@ -90,13 +102,23 @@ const SkillsFormation: React.FC = () => {
         {/* Football field */}
         <div 
           ref={fieldRef}
-          className="relative bg-gradient-to-b from-green-600 to-green-700 rounded-3xl p-8 shadow-2xl"
+          className={`relative rounded-3xl p-8 shadow-2xl transition-colors duration-500 ${
+            isDarkMode 
+              ? 'bg-gradient-to-b from-green-600 to-green-700' 
+              : 'bg-gradient-to-b from-green-400 to-green-500'
+          }`}
           style={{ aspectRatio: '16/10' }}
         >
           {/* Field markings */}
-          <div className="absolute inset-4 border-2 border-white border-opacity-40 rounded-xl">
-            <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-white bg-opacity-40" />
-            <div className="absolute left-1/2 top-1/2 w-16 h-16 border-2 border-white border-opacity-40 rounded-full transform -translate-x-1/2 -translate-y-1/2" />
+          <div className={`absolute inset-4 border-2 rounded-xl ${
+            isDarkMode ? 'border-white border-opacity-40' : 'border-white border-opacity-60'
+          }`}>
+            <div className={`absolute left-1/2 top-0 bottom-0 w-0.5 ${
+              isDarkMode ? 'bg-white bg-opacity-40' : 'bg-white bg-opacity-60'
+            }`} />
+            <div className={`absolute left-1/2 top-1/2 w-16 h-16 border-2 rounded-full transform -translate-x-1/2 -translate-y-1/2 ${
+              isDarkMode ? 'border-white border-opacity-40' : 'border-white border-opacity-60'
+            }`} />
           </div>
 
           {/* Skills as players */}
@@ -114,8 +136,12 @@ const SkillsFormation: React.FC = () => {
               >
                 <div className="relative">
                   {/* Player circle */}
-                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <IconComponent className="w-8 h-8 text-green-600" />
+                  <div className={`w-16 h-16 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 ${
+                    isDarkMode ? 'bg-white' : 'bg-gray-100'
+                  }`}>
+                    <IconComponent className={`w-8 h-8 ${
+                      isDarkMode ? 'text-green-600' : 'text-green-700'
+                    }`} />
                   </div>
                   
                   {/* Skill level indicator */}
@@ -125,7 +151,11 @@ const SkillsFormation: React.FC = () => {
                   
                   {/* Tooltip */}
                   <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="bg-gray-900 text-white px-3 py-1 rounded-lg text-sm whitespace-nowrap">
+                    <div className={`px-3 py-1 rounded-lg text-sm whitespace-nowrap ${
+                      isDarkMode 
+                        ? 'bg-gray-900 text-white' 
+                        : 'bg-white text-gray-800 shadow-lg border'
+                    }`}>
                       {skill.name} - {skill.level}%
                     </div>
                   </div>
@@ -137,7 +167,9 @@ const SkillsFormation: React.FC = () => {
 
         {/* Commentary */}
         <div className="mt-8 text-center">
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+          <p className={`text-lg max-w-2xl mx-auto ${
+            isDarkMode ? 'text-gray-300' : 'text-gray-600'
+          }`}>
             "A perfectly balanced formation with strong technical abilities across the field. 
             The midfield is controlled by React and TypeScript, while the defense is anchored by 
             reliable database technologies."
