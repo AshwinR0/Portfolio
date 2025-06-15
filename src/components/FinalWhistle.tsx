@@ -65,7 +65,7 @@ const FinalWhistle: React.FC = () => {
           });
 
           // Stars twinkling
-          starsRef.current.forEach((star, index) => {
+          starsRef.current.forEach((star) => {
             if (star) {
               gsap.to(star, {
                 opacity: 0.3,

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
@@ -17,7 +17,6 @@ function App() {
     gsap.set(document.body, { overflow: 'auto' });
     
     // Smooth scrolling setup
-    ScrollTrigger.normalizeScroll(true);
     
     return () => {
       ScrollTrigger.killAll();

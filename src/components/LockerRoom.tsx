@@ -97,7 +97,7 @@ const LockerRoom: React.FC = () => {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [philosophy.length]);
 
   return (
     <section 
