@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
-import { Code, Database, Settings, Zap, Globe, GitBranch } from 'lucide-react';
+import { Atom, FileCode2, Palette, Server, DatabaseZap, Zap, GitBranch, Database } from 'lucide-react';
 
 const SkillsFormation: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -10,14 +9,14 @@ const SkillsFormation: React.FC = () => {
   const skillsRef = useRef<HTMLDivElement[]>([]);
 
   const skills = [
-    { name: 'React', icon: Code, level: 95, position: { x: 50, y: 20 } },
-    { name: 'TypeScript', icon: Code, level: 90, position: { x: 30, y: 35 } },
+    { name: 'React', icon: Atom, level: 95, position: { x: 50, y: 20 } },
+    { name: 'TypeScript', icon: FileCode2, level: 90, position: { x: 30, y: 35 } },
     { name: 'JavaScript', icon: Zap, level: 95, position: { x: 70, y: 35 } },
-    { name: 'Tailwind', icon: Globe, level: 85, position: { x: 20, y: 55 } },
-    { name: 'FastAPI', icon: Settings, level: 80, position: { x: 50, y: 50 } },
+    { name: 'Tailwind', icon: Palette, level: 85, position: { x: 20, y: 55 } },
+    { name: 'FastAPI', icon: Server, level: 80, position: { x: 50, y: 50 } },
     { name: 'Git', icon: GitBranch, level: 90, position: { x: 80, y: 55 } },
     { name: 'PostgreSQL', icon: Database, level: 75, position: { x: 35, y: 75 } },
-    { name: 'MongoDB', icon: Database, level: 70, position: { x: 65, y: 75 } }
+    { name: 'MongoDB', icon: DatabaseZap, level: 70, position: { x: 65, y: 75 } }
   ];
 
   useEffect(() => {

@@ -17,7 +17,6 @@ function App() {
     gsap.set(document.body, { overflow: 'auto' });
     
     // Smooth scrolling setup
-    ScrollTrigger.normalizeScroll(true);
     
     return () => {
       ScrollTrigger.killAll();

@@ -48,7 +48,7 @@ const ProjectGoals: React.FC = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      projectRefs.current.forEach((project, index) => {
+      projectRefs.current.forEach((project) => {
         if (project) {
           ScrollTrigger.create({
             trigger: project,
@@ -58,7 +58,6 @@ const ProjectGoals: React.FC = () => {
               const tl = gsap.timeline();
               
               // Ball trajectory (invisible)
-              const ballPath = project.querySelector('.ball-path');
               const card = project.querySelector('.project-card');
               const impact = project.querySelector('.impact-badge');
               
