@@ -3,7 +3,11 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Building, Users, Zap, Shield, TestTube } from 'lucide-react';
 
-const ExperienceReplay: React.FC = () => {
+interface ExperienceReplayProps {
+  isDarkMode: boolean;
+}
+
+const ExperienceReplay: React.FC<ExperienceReplayProps> = ({ isDarkMode }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const scoreboardRef = useRef<HTMLDivElement>(null);
   const experienceRefs = useRef<HTMLDivElement[]>([]);
@@ -88,31 +92,43 @@ const ExperienceReplay: React.FC = () => {
   return (
     <section 
       ref={sectionRef}
-      className="min-h-screen bg-gradient-to-b from-green-950 to-gray-900 py-20 px-4"
+      className={`min-h-screen py-20 px-4 transition-colors duration-500 ${
+        isDarkMode 
+          ? 'bg-gradient-to-b from-green-950 to-gray-900' 
+          : 'bg-gradient-to-b from-green-100 to-blue-50'
+      }`}
     >
       <div className="max-w-6xl mx-auto">
         {/* Scoreboard header */}
         <div 
           ref={scoreboardRef}
-          className="bg-gray-900 rounded-2xl p-6 mb-16 shadow-2xl border border-green-400"
+          className={`rounded-2xl p-6 mb-16 shadow-2xl border transition-colors duration-500 ${
+            isDarkMode 
+              ? 'bg-gray-900 border-green-400' 
+              : 'bg-white border-green-500 shadow-xl'
+          }`}
         >
           <div className="text-center">
-            <h2 className="text-4xl md:text-6xl font-bold mb-4 text-white">
+            <h2 className={`text-4xl md:text-6xl font-bold mb-4 ${
+              isDarkMode ? 'text-white' : 'text-gray-800'
+            }`}>
               Midfield Mastery
             </h2>
-            <p className="text-xl text-green-200 mb-4">Professional Experience Highlights</p>
+            <p className={`text-xl mb-4 ${
+              isDarkMode ? 'text-green-200' : 'text-green-700'
+            }`}>Professional Experience Highlights</p>
             <div className="flex justify-center items-center space-x-8">
               <div className="text-center">
                 <div className="text-3xl font-bold text-green-400">4+</div>
-                <div className="text-sm text-gray-400">Years</div>
+                <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Years</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-blue-400">50+</div>
-                <div className="text-sm text-gray-400">Projects</div>
+                <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Projects</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-yellow-400">95%</div>
-                <div className="text-sm text-gray-400">Success Rate</div>
+                <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Success Rate</div>
               </div>
             </div>
           </div>
@@ -144,14 +160,20 @@ const ExperienceReplay: React.FC = () => {
                   return (
                     <div
                       key={highlightIndex}
-                      className="highlight-item bg-gray-800 p-4 rounded-xl border border-gray-700 hover:border-green-400 transition-colors duration-300 group"
+                      className={`highlight-item p-4 rounded-xl border transition-all duration-300 group ${
+                        isDarkMode 
+                          ? 'bg-gray-800 border-gray-700 hover:border-green-400' 
+                          : 'bg-white border-gray-200 hover:border-green-500 shadow-md hover:shadow-lg'
+                      }`}
                     >
                       <div className="flex items-start space-x-3">
                         <div className="bg-green-600 p-2 rounded-lg group-hover:bg-green-500 transition-colors duration-300">
                           <IconComponent className="w-5 h-5 text-white" />
                         </div>
                         <div className="flex-1">
-                          <p className="text-white text-sm mb-2">{highlight.text}</p>
+                          <p className={`text-sm mb-2 ${
+                            isDarkMode ? 'text-white' : 'text-gray-800'
+                          }`}>{highlight.text}</p>
                           <div className="text-green-400 text-xs font-semibold">
                             {highlight.impact}
                           </div>
@@ -166,10 +188,16 @@ const ExperienceReplay: React.FC = () => {
         </div>
 
         {/* Match commentary */}
-        <div className="mt-16 bg-gray-900 p-6 rounded-2xl border border-green-400">
+        <div className={`mt-16 p-6 rounded-2xl border transition-colors duration-500 ${
+          isDarkMode 
+            ? 'bg-gray-900 border-green-400' 
+            : 'bg-white border-green-500 shadow-xl'
+        }`}>
           <div className="text-center">
             <h4 className="text-lg font-semibold text-green-400 mb-2">Match Commentary</h4>
-            <p className="text-gray-300 max-w-3xl mx-auto">
+            <p className={`max-w-3xl mx-auto ${
+              isDarkMode ? 'text-gray-300' : 'text-gray-600'
+            }`}>
               "Outstanding performance in the midfield! The player has shown exceptional 
               technical skills and leadership, consistently delivering results that impact 
               the entire team's performance. A true game-changer in the development arena."
