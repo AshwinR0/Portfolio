@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Github, Linkedin, Mail } from 'lucide-react';
+import goalKeeper from '../assets/svg/goalKeeper.svg'; // Adjust the path as necessary
+import striker from '../assets/svg/striker.svg'; // Adjust the path as necessary
 
 interface MatchHeroProps {
   isDarkMode: boolean;
@@ -13,24 +15,30 @@ const MatchHero: React.FC<MatchHeroProps> = ({ isDarkMode }) => {
   const silhouetteRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const socialRef = useRef<HTMLDivElement>(null);
+  const fieldRef = useRef<HTMLDivElement>(null);
+  const playerSilhouettesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Initial setup
       gsap.set([titleRef.current, socialRef.current], { opacity: 0, y: 50 });
       gsap.set(silhouetteRef.current, { opacity: 0, scale: 0.8 });
+      gsap.set(playerSilhouettesRef.current, { opacity: 0 });
 
       // Hero entrance animation
       const tl = gsap.timeline({ delay: 0.5 });
       
-      const dayGradient = 'linear-gradient(135deg, #87CEEB 0%, #98FB98 50%, #4ade80 100%)';
-      const nightGradient = 'linear-gradient(135deg, #1a1a1a 0%, #2d5a27 50%, #4ade80 100%)';
-      
-      tl.to(tunnelRef.current, {
-        background: isDarkMode ? nightGradient : dayGradient,
+      tl.to(fieldRef.current, {
+        opacity: 1,
+        scale: 1,
         duration: 2,
         ease: 'power2.out'
       })
+      .to(playerSilhouettesRef.current, {
+        opacity: isDarkMode ? 0.8 : 0.6,
+        duration: 1.5,
+        ease: 'power2.out'
+      }, '-=1.5')
       .to(silhouetteRef.current, {
         opacity: 1,
         scale: 1,
@@ -56,10 +64,10 @@ const MatchHero: React.FC<MatchHeroProps> = ({ isDarkMode }) => {
         start: 'top top',
         end: 'bottom center',
         scrub: 1,
-        onUpdate: () => {
-          const currentGradient = isDarkMode ? nightGradient : dayGradient;
-          gsap.to(tunnelRef.current, {
-            background: currentGradient,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          gsap.to(fieldRef.current, {
+            scale: 1 + progress * 0.1,
             duration: 0.3
           });
         }
@@ -74,6 +82,21 @@ const MatchHero: React.FC<MatchHeroProps> = ({ isDarkMode }) => {
         ease: 'power2.inOut'
       });
 
+      // Animate player silhouettes
+      const players = playerSilhouettesRef.current?.children;
+      if (players) {
+        Array.from(players).forEach((player, index) => {
+          gsap.to(player, {
+            y: -5 + Math.sin(index) * 3,
+            duration: 3 + index * 0.5,
+            repeat: -1,
+            yoyo: true,
+            ease: 'power2.inOut',
+            delay: index * 0.2
+          });
+        });
+      }
+
     }, heroRef);
 
     return () => ctx.revert();
@@ -81,11 +104,8 @@ const MatchHero: React.FC<MatchHeroProps> = ({ isDarkMode }) => {
 
   // Theme transition effect
   useEffect(() => {
-    const dayGradient = 'linear-gradient(135deg, #87CEEB 0%, #98FB98 50%, #4ade80 100%)';
-    const nightGradient = 'linear-gradient(135deg, #1a1a1a 0%, #2d5a27 50%, #4ade80 100%)';
-    
-    gsap.to(tunnelRef.current, {
-      background: isDarkMode ? nightGradient : dayGradient,
+    gsap.to(playerSilhouettesRef.current, {
+      opacity: isDarkMode ? 0.8 : 0.6,
       duration: 0.8,
       ease: 'power2.inOut'
     });
@@ -98,17 +118,93 @@ const MatchHero: React.FC<MatchHeroProps> = ({ isDarkMode }) => {
         isDarkMode ? 'bg-gray-900' : 'bg-blue-100'
       }`}
     >
-      {/* Stadium tunnel background */}
+      {/* Football Field Background */}
+      <div 
+        ref={fieldRef}
+        className="absolute inset-0 opacity-0"
+        style={{
+          background: isDarkMode 
+            ? 'linear-gradient(135deg, #1a4d3a 0%, #2d5a27 30%, #1a4d3a 70%, #0f2419 100%)'
+            : 'linear-gradient(135deg, #22c55e 0%, #16a34a 30%, #15803d 70%, #166534 100%)',
+          transform: 'scale(0.8)'
+        }}
+      >
+        {/* Field markings */}
+        <div className="absolute inset-0">
+          {/* Center line */}
+          <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-white opacity-30 transform -translate-x-1/2" />
+          
+          {/* Center circle */}
+          <div className="absolute left-1/2 top-1/2 w-32 h-32 border-2 border-white opacity-30 rounded-full transform -translate-x-1/2 -translate-y-1/2" />
+          
+          {/* Goal areas */}
+          <div className="absolute left-0 top-1/2 w-16 h-24 border-2 border-white opacity-30 transform -translate-y-1/2" />
+          <div className="absolute right-0 top-1/2 w-16 h-24 border-2 border-white opacity-30 transform -translate-y-1/2" />
+          
+          {/* Corner arcs */}
+          <div className="absolute top-0 left-0 w-8 h-8 border-b-2 border-r-2 border-white opacity-30 rounded-br-full" />
+          <div className="absolute top-0 right-0 w-8 h-8 border-b-2 border-l-2 border-white opacity-30 rounded-bl-full" />
+          <div className="absolute bottom-0 left-0 w-8 h-8 border-t-2 border-r-2 border-white opacity-30 rounded-tr-full" />
+          <div className="absolute bottom-0 right-0 w-8 h-8 border-t-2 border-l-2 border-white opacity-30 rounded-tl-full" />
+        </div>
+      </div>
+
+      {/* Player Silhouettes */}
+      <div 
+        ref={playerSilhouettesRef}
+        className="absolute inset-0 pointer-events-none"
+      >
+        {/* Kicking player silhouette */}
+        <div className="absolute bottom-1/4 left-1/4 transform -translate-x-1/2">
+          {/* <svg width="120" height="120" viewBox="0 0 120 120" className={`${isDarkMode ? 'text-black' : 'text-gray-800'} opacity-70`}>
+            <path fill="currentColor" d="M60 10c-5 0-9 4-9 9s4 9 9 9 9-4 9-9-4-9-9-9zm-8 25c-3 0-5 2-5 5v15l-15 8c-2 1-3 3-2 5l8 15c1 2 3 3 5 2l12-6v20c0 3 2 5 5 5s5-2 5-5V79l12 6c2 1 4 0 5-2l8-15c1-2 0-4-2-5l-15-8V40c0-3-2-5-5-5h-16z"/>
+          </svg> */}
+          <img
+            src={striker}
+            alt="Goalkeeper"
+            width={350}
+            height={350}
+            className={`${isDarkMode ? 'text-black' : 'text-gray-800'} opacity-70`}
+            draggable={false}
+          />
+        </div>
+
+        {/* Goalkeeper silhouette */}
+        <div className="absolute bottom-1/4 right-1/4 transform translate-x-1/2">
+          {/* <svg width="100" height="100" viewBox="0 0 100 100" className={`${isDarkMode ? 'text-black' : 'text-gray-800'} opacity-70`}>
+            <path fill="currentColor" d="M50 8c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7zm-6 20c-2 0-4 2-4 4v12l-20 5c-2 0-3 2-3 4v8c0 2 1 4 3 4l20-5v25c0 2 2 4 4 4h12c2 0 4-2 4-4V60l20 5c2 0 3-2 3-4v-8c0-2-1-4-3-4l-20-5V32c0-2-2-4-4-4H44z"/>
+          </svg> */}
+          <img
+            src={goalKeeper}
+            alt="Goalkeeper"
+            width={500}
+            height={500}
+            className={`${isDarkMode ? 'text-black' : 'text-gray-800'} opacity-70`}
+            draggable={false}
+          />
+        </div>
+
+        {/* Football */}
+        <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className={`w-6 h-6 rounded-full ${isDarkMode ? 'bg-white' : 'bg-gray-800'} opacity-60`}>
+            <div className="w-full h-full rounded-full border-2 border-current opacity-50"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Stadium tunnel overlay */}
       <div 
         ref={tunnelRef}
-        className="absolute inset-0 bg-gradient-to-br from-gray-900 via-green-900 to-green-400"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          clipPath: 'polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%)'
+          background: isDarkMode 
+            ? 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.8) 100%)'
+            : 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.1) 70%, rgba(0,0,0,0.4) 100%)'
         }}
       />
       
       {/* Stadium lights effect */}
-      <div className="absolute top-0 left-0 w-full h-full">
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <div className={`absolute top-10 left-1/4 w-20 h-20 rounded-full opacity-20 blur-xl animate-pulse ${
           isDarkMode ? 'bg-yellow-300' : 'bg-yellow-400'
         }`} />
@@ -181,7 +277,7 @@ const MatchHero: React.FC<MatchHeroProps> = ({ isDarkMode }) => {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center z-10">
         <div className="w-1 h-12 bg-gradient-to-b from-green-400 to-transparent mx-auto mb-2 animate-pulse" />
         <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
           Match Starting
