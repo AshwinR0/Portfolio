@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Users, ShoppingCart, MessageCircle, TrendingUp, ExternalLink } from 'lucide-react';
+import { Users, ShoppingCart, MessageCircle, TrendingUp } from 'lucide-react';
 
 interface ProjectGoalsProps {
   isDarkMode: boolean;
@@ -19,7 +19,6 @@ const ProjectGoals: React.FC<ProjectGoalsProps> = ({ isDarkMode }) => {
       tools: ['React', 'Node.js', 'PostgreSQL', 'AI/ML'],
       impact: '+30% hiring efficiency',
       color: 'from-blue-600 to-blue-800',
-      link: '#'
     },
     {
       title: 'Auction Application',
@@ -28,7 +27,6 @@ const ProjectGoals: React.FC<ProjectGoalsProps> = ({ isDarkMode }) => {
       tools: ['React', 'WebSocket', 'MongoDB', 'Express'],
       impact: '1M+ active users',
       color: 'from-purple-600 to-purple-800',
-      link: '#'
     },
     {
       title: 'Chatbot Plugin',
@@ -37,7 +35,6 @@ const ProjectGoals: React.FC<ProjectGoalsProps> = ({ isDarkMode }) => {
       tools: ['TypeScript', 'NLP', 'REST API', 'Docker'],
       impact: '25% support reduction',
       color: 'from-green-600 to-green-800',
-      link: '#'
     },
     {
       title: 'Prediction Model',
@@ -46,7 +43,6 @@ const ProjectGoals: React.FC<ProjectGoalsProps> = ({ isDarkMode }) => {
       tools: ['Python', 'React', 'FastAPI', 'ML'],
       impact: '85% accuracy rate',
       color: 'from-orange-600 to-orange-800',
-      link: '#'
     }
   ];
 
@@ -156,12 +152,12 @@ const ProjectGoals: React.FC<ProjectGoalsProps> = ({ isDarkMode }) => {
                     <div className="bg-white bg-opacity-20 p-3 rounded-xl">
                       <IconComponent className="w-8 h-8 text-white" />
                     </div>
-                    <a 
+                    {/* <a 
                       href={project.link}
                       className="text-white hover:text-yellow-300 transition-colors duration-300"
                     >
                       <ExternalLink className="w-5 h-5" />
-                    </a>
+                    </a> */}
                   </div>
 
                   {/* Content */}

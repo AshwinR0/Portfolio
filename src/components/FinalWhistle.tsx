@@ -219,7 +219,7 @@ const FinalWhistle: React.FC<FinalWhistleProps> = ({ isDarkMode }) => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="mailto:ashwin@example.com"
+              href="mailto:ashwinrevi10@gmail.com"
               className="group bg-gradient-to-r from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 px-8 py-4 rounded-full text-white font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
             >
               <Mail className="w-5 h-5" />
@@ -228,7 +228,8 @@ const FinalWhistle: React.FC<FinalWhistleProps> = ({ isDarkMode }) => {
             </a>
             
             <a
-              href="#"
+              href="https://ashwin-frontend-resume.netlify.app/"
+              target="_blank"
               className={`group border-2 px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 ${
                 isDarkMode 
                   ? 'bg-gray-800 hover:bg-gray-700 border-gray-600 hover:border-green-400 text-white' 
