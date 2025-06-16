@@ -145,7 +145,7 @@ const SkillsFormation: React.FC<SkillsFormationProps> = ({ isDarkMode }) => {
                   </div>
                   
                   {/* Skill level indicator */}
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full flex items-center justify-center text-xs font-bold text-green-900">
+                  <div className={`absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-green-900 ${isDarkMode ? 'bg-green-400' : 'bg-green-200'}`}>
                     {Math.floor(skill.level / 10)}
                   </div>
                   
