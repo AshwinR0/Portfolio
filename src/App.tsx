@@ -1,5 +1,7 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { gsap } from 'gsap';
+import LoadingScreen from './components/LoadingScreen'; // Import LoadingScreen
+import CursorTrail from './components/CursorTrail'; // Import CursorTrail
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 import { Sun, Moon } from 'lucide-react';
@@ -14,6 +16,16 @@ gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isLoading, setIsLoading] = useState(true); // isLoading state
+
+  useEffect(() => {
+    // Simulate loading
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000); // Adjust time as needed
+
+    return () => clearTimeout(timer); // Cleanup timer
+  }, []);
 
   useEffect(() => {
     // Initialize scroll-snap behavior
@@ -37,8 +49,13 @@ function App() {
     });
   };
 
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <div className={`${isDarkMode ? 'dark' : ''} transition-colors duration-500`}>
+      <CursorTrail /> {/* Pass isDarkMode to CursorTrail */}
       <div className="bg-gray-900 dark:bg-gray-900 text-white overflow-x-hidden relative">
         {/* Theme Toggle Button */}
         <button
