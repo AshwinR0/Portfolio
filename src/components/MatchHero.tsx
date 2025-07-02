@@ -300,13 +300,13 @@ const MatchHero: React.FC<MatchHeroProps> = ({ isDarkMode }) => {
           </h1> */}
           <h1
             ref={nameRef}
-            className={`text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r bg-clip-text text-transparent ${isDarkMode
+            className={`text-7xl sm:text-8xl md:text-8xl lg:text-9xl font-bold mb-4 bg-gradient-to-r bg-clip-text text-transparent ${isDarkMode
                 ? 'from-white via-green-200 to-green-400'
                 : 'from-gray-800 via-green-600 to-green-800'
               }`}
             style={{
               fontFamily: "'Luckiest Guy', cursive",
-              fontSize: "100px",
+              // fontSize: "100px",
               color: '#FFFFFF', // Set the text color
               textShadow: '-5px 4px 0px rgba(0,0,0,0.95)',
               filter: 'drop-shadow(0 0 12px rgba(0,0,0,0.10))',
@@ -333,7 +333,7 @@ const MatchHero: React.FC<MatchHeroProps> = ({ isDarkMode }) => {
           </h2> */}
           <h1
             ref={subtitleRef}
-            className={`text-xl md:text-2xl mb-2 font-medium ${isDarkMode ? 'text-green-200' : 'text-green-700'}`}
+            className={`text-2xl sm:text-2xl md:text-3xl lg:text-4xl mb-2 font-medium ${isDarkMode ? 'text-green-200' : 'text-green-700'}`}
             style={{
               fontFamily: "'Luckiest Guy', cursive",
               color: '#FFFFFF', // Set the text color
